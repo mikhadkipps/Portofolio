@@ -74,7 +74,7 @@ const windowConfig = {
     content: `
       <div class="about-static">
         <div class="profile-card">
-          <img src="/images/duck.jpeg" class="profile-img">
+          <img src="./images/duck.jpeg" class="profile-img">
           <div class="profile-info">
             <h1 id="myname-title">Mikha Dwight</h1>
             <p class="profile-subtitle">Fresh graduate web developer</p>
@@ -148,7 +148,7 @@ const windowConfig = {
   </div>
     <div class="dev-card">
       <div class="dev-image">
-        <img class="works-image" src="/images/homepage_Deborah.png">
+        <img class="works-image" src="./images/homepage_Deborah.png">
       </div>
 
       <div class="dev-info">
@@ -171,7 +171,7 @@ const windowConfig = {
 
     <div class="dev-card">
       <div class="dev-image">
-        <img class="works-image small-works-image" src="/images/AkiNini.png">
+        <img class="works-image small-works-image" src="./images/AkiNini.png">
       </div>
 
       <div class="dev-info">
@@ -206,9 +206,9 @@ const windowConfig = {
 
       <a href="https://www.linkedin.com/in/mikha-dwight-b1943a327/" target="_blank" class="link-item">
         <img
-          src="/images/linkedin.png"
-          data-light="/images/linkedin.png"
-          data-dark="/images/linkedin_dark.png"
+          src="./images/linkedin.png"
+          data-light="./images/linkedin.png"
+          data-dark="./images/linkedin_dark.png"
           class="linkedin-img"
           alt="LinkedIn"
         >
@@ -217,9 +217,9 @@ const windowConfig = {
 
       <a href="https://www.instagram.com/mippuw/" target="_blank" class="link-item">
         <img
-          src="/images/instagram.png"
-          data-light="/images/instagram.png"
-          data-dark="/images/instagram_dark.png"
+          src="./images/instagram.png"
+          data-light="./images/instagram.png"
+          data-dark="./images/instagram_dark.png"
           class="linkedin-img"
           alt="Instagram"
         >
@@ -236,7 +236,7 @@ const windowConfig = {
     content: `
       <p><b>mail me!</b></p>
       <div class="profile-card-contact">
-        <img src="/images/cartoonme2.png" class="profile-img-contact">
+        <img src="./images/cartoonme2.png" class="profile-img-contact">
       </div>
       <p class="contact-line">
       easy way to reach me is via email. You can
@@ -259,15 +259,15 @@ const setAudio = (src, volume = 0.1) => {
 };
 
 // sounds
-const audio = setAudio('/audios/open_sound.mp3', 0.3);       // open window
-const closeAudio = setAudio('/audios/close_sound.mp3', 0.3);  // close window
-const cringSound = setAudio('/audios/cring_sound.mp3', 0.3); // copy email
+const audio = setAudio('./audios/open_sound.mp3', 0.3);       // open window
+const closeAudio = setAudio('./audios/close_sound.mp3', 0.3);  // close window
+const cringSound = setAudio('./audios/cring_sound.mp3', 0.3); // copy email
 const duckHoverSound = new Audio("audios/duck_sound.mp3");
 duckHoverSound.volume = 0.3;
-const moonSound = setAudio('/audios/moon_btn.mp3', 0.3);     // moon button
-const sunSound = setAudio('/audios/sun_btn.mp3', 0.3);       // sun button
-const unmuteSound = setAudio('/audios/pop_close.mp3', 0.1);  // unmute sound
-const imageOpenSound = setAudio('/audios/image_open.mp3', 0.3); // image modal open
+const moonSound = setAudio('./audios/moon_btn.mp3', 0.3);     // moon button
+const sunSound = setAudio('./audios/sun_btn.mp3', 0.3);       // sun button
+const unmuteSound = setAudio('./audios/pop_close.mp3', 0.1);  // unmute sound
+const imageOpenSound = setAudio('./audios/image_open.mp3', 0.3); // image modal open
 
 /* ================= OPEN WINDOW ================= */
 function openWindow(type, button) {
@@ -533,15 +533,15 @@ function toggleTheme() {
   const contactImg = document.querySelector('button[data-window="contact"] img');
 
   if (document.body.classList.contains("dark")) {
-    aboutImg.src = "/images/about_dark.png";
-    worksImg.src = "/images/works_dark.png";
-    linksImg.src = "/images/links_dark.png";
-    contactImg.src = "/images/contact_dark.png";
+    aboutImg.src = "./images/about_dark.png";
+    worksImg.src = "./images/works_dark.png";
+    linksImg.src = "./images/links_dark.png";
+    contactImg.src = "./images/contact_dark.png";
   } else {
-    aboutImg.src = "/images/about.png";
-    worksImg.src = "/images/works.png";
-    linksImg.src = "/images/links.png";
-    contactImg.src = "/images/contact.png";
+    aboutImg.src = "./images/about.png";
+    worksImg.src = "./images/works.png";
+    linksImg.src = "./images/links.png";
+    contactImg.src = "./images/contact.png";
   }
 
   // Sync LinkedIn logos based on theme
@@ -609,10 +609,10 @@ const worksImg = document.querySelector('button[data-window="works"] img');
 const linksImg = document.querySelector('button[data-window="links"] img');
 const contactImg = document.querySelector('button[data-window="contact"] img');
 
-aboutImg.src = "/images/about.png";
-worksImg.src = "/images/works.png";
-linksImg.src = "/images/links.png";
-contactImg.src = "/images/contact.png";
+aboutImg.src = "./images/about.png";
+worksImg.src = "./images/works.png";
+linksImg.src = "./images/links.png";
+contactImg.src = "./images/contact.png";
 
 // switch linkedin images based on theme
 document.querySelectorAll(".linkedin-img").forEach(img => {
@@ -634,3 +634,4 @@ if (document.body.classList.contains("dark")) {
     img.src = img.dataset.dark;
   });
 }
+
