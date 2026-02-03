@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mikha's Desktop</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/ico" href="/images/myIcon.ico">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+   <button class="header-btn" onclick="toggleTheme()">
+  <i class="fa-regular fa-sun"></i>
+</button>
+
+    <button class="header-btn" id="muteBtn">
+  <i class="fa-solid fa-volume-high"></i>
+</button>
+
+  </div>
+
+  <!-- HOME WINDOW -->
+  <div class="window home-window">
+    <div class="title-bar">home</div>
+
+    <div class="content">
+      <h1>hi! <span id="myname">i'm mikha</span></h1>
+      <p>website developer</p>
+    </div>
+
+    <div class="status-bar">
+      <button id="open_window" class="status-item"
+        onclick="audio.currentTime = 0; audio.play();"
+        data-window="about">
+        <img src="/images/about.png" alt="about">
+        <span>about</span>
+      </button>
+
+      <button class="status-item"
+        onclick="audio.currentTime = 0; audio.play();"
+        data-window="works">
+        <img src="/images/works.png" alt="works">
+        <span>works</span>
+      </button>
+
+      <button class="status-item"
+        onclick="audio.currentTime = 0; audio.play();"
+        data-window="links">
+        <img src="/images/links.png" alt="links">
+        <span>links</span>
+      </button>
+
+      <button class="status-item"
+        onclick="audio.currentTime = 0; audio.play();"
+        data-window="contact">
+        <img src="/images/contact.png" alt="contact">
+        <span>contact</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- music button -->
+  <div class="right-col">
+    <img src="images/stationary_duck_icon.png"id="icon" />
+  </div>
+
+  <audio id="mySong" >
+    <source src="/audios/chill music loops.mp3" type="audio/mp3">
+  </audio>
+
+ <script>
+  var mySong = document.getElementById("mySong");
+  var icon = document.getElementById("icon");
+
+  mySong.volume = 0.3;
+
+  icon.onclick = function () {
+    if (mySong.paused) {
+      mySong.currentTime = 0;   // always start from beginning
+      mySong.play();
+      icon.src = "images/singing_duck_icon.png";
+      icon.classList.add("bird-playing");
+    } else {
+      mySong.pause();
+      mySong.currentTime = 0;   // reset to beginning
+      icon.src = "images/stationary_duck_icon.png";
+      icon.classList.remove("bird-playing");
+    }
+  };
+</script>
+
+
+
+  <!-- keep this -->
+  <script src="script.js"></script>
+
+  <!-- WAVES (NEW SVG VERSION) -->
+  <div class="waveAnimation">
+    <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+      <path
+        class="w1"
+        d="M-8.74,71.55 C289.78,255.11 349.60,4.47 505.36,34.05 L500 150 L0 150 Z"
+      />
+      <path
+        class="w2"
+        d="M-23.42,125.83 C187.63,45.89 299.38,57.73 526.80,123.86 L500 150 L0 150 Z"
+      />
+      <path
+        class="w3"
+        d="M-23.42,125.83 C172.96,-152.44 217.55,183.06 504.22,55.77 L500 150 L0 150 Z"
+      />
+    </svg>
+  </div>
+  <img
+  src="/images/linkedin.png"
+  data-light="/images/linkedin.png"
+  data-dark="/images/linkedin_dark.png"
+  class="linkedin-img"
+  alt="LinkedIn"
+>
+
+</body>
+
+
+
+<!-- Audio element for background music -->
+<!-- <audio type="audio/mp3" src="/audios/chill music loops.mp3" autoplay loop></audio> -->
+
+</html>
