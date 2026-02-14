@@ -1,680 +1,1010 @@
-function syncLinkedInLogos(scope = document) {
-  const isDark = document.body.classList.contains("dark");
+/* =========================
+   THEME VARIABLES
+   ========================= */
 
-  scope.querySelectorAll(".linkedin-img").forEach(img => {
-    img.src = isDark ? img.dataset.dark : img.dataset.light;
-  });
+:root {
+  --bg-body: #FBF3D1;
+  --bg-window: #ffffff;
+  --bg-titlebar: #424242;
+
+  --text-main: #000000;
+  --text-muted: #666666;
+  --text-invert: #ffffff;
+
+  --accent: #f59300;
+  --border-window: #424242;
+
+  --wave-color: #30364F;
 }
 
-/* ================= WINDOW REGISTRY ================= */
-const openWindows = Object.create(null);
-let topZ = 300;
+/* =========================
+   DARK MODE OVERRIDE
+   ========================= */
 
-/* ================= Z-INDEX ================= */
-const bringToFront = (win) => {
-  win.style.zIndex = ++topZ;
-};
+body.dark {
+  --bg-body: #0e0f14;
+  --bg-window: #161821;
+  --bg-titlebar: #1f2230;
 
-/* ================= DRAG ================= */
-function makeDraggable(win) {
-  // Disable dragging on touch devices
-  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-    return;
-  }
+  --text-main: #e6e6e6;
+  --text-muted: #9aa0b3;
+  --text-invert: #ffffff;
 
-  let dragging = false;
-  let startX = 0, startY = 0;
-  let startLeft = 0, startTop = 0;
+  --accent: #ff9f1c;
+  --border-window: #2c3042;
 
-  win.addEventListener("mousedown", (e) => {
-    if (!e.target.closest(".title-bar")) return;
-    if (e.target.closest(".close-btn")) return;
-
-    dragging = true;
-    bringToFront(win);
-
-    startX = e.clientX;
-    startY = e.clientY;
-
-    const rect = win.getBoundingClientRect();
-    startLeft = rect.left;
-    startTop = rect.top;
-
-    document.body.style.userSelect = "none";
-  });
-
-  document.addEventListener("mousemove", (e) => {
-    if (!dragging) return;
-
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-    const padding = 10;
-
-    const maxLeft = window.innerWidth - win.offsetWidth - padding;
-    const maxTop = window.innerHeight - win.offsetHeight - padding;
-
-    win.style.left =
-      Math.max(padding, Math.min(startLeft + dx, maxLeft)) + "px";
-    win.style.top =
-      Math.max(padding, Math.min(startTop + dy, maxTop)) + "px";
-  });
-
-  document.addEventListener("mouseup", () => {
-    dragging = false;
-    document.body.style.userSelect = "";
-  });
+  --wave-color: #0b1020;
 }
 
-/* ================= WINDOW CONTENT ================= */
-const windowConfig = {
-  about: {
-    title: "about",
-    width: window.innerWidth < 768 ? '95vw' : window.innerWidth < 1024 ? '90vw' : 800,
-    height: 'auto',
-    content: `
-      <div class="about-static">
-        <div class="profile-card">
-          <img src="/images/my_profilePic.png" class="profile-img">
-          <div class="profile-info">
-            <h1 id="myname-title">Mikha Dwight</h1>
-            <p class="profile-subtitle">Fresh graduate web developer</p>
-          </div>
-        </div>
-      </div>
+/* =========================
+   GLOBAL
+   ========================= */
 
-      <div class="about-scroll">
-        <p id="education">Hi! I'm Mikha a web developer i design wireframes and build front-end websites that feel interactive, simple, and user-friendly.<br><br>
-        
-        <a href="/images/Mikha_Dwight_CV_ATS.pdf" download class="cvBtn">Download My CV</a><br><br>
-
-        <h1 id="ScrollAbout"><b>Motto</b></h1>
-        <dv id="education">
-          <p><b>&nbsp;&nbsp;&nbsp; Courage, determination, and faith.</b></p>
-        </dv><br>
-
-        <h1 id="ScrollAbout"><b>Education</b></h1>
-        <dv id="education">
-          <p>&nbsp;&nbsp;&nbsp; Bachelor of Science in Information Systems</p>
-          <p class="education-detail">&nbsp; &nbsp; Gunadarma University 2025</p>
-        </dv><br>
-
-        <h1 id="ScrollAbout"><b>Language Proficiency</b></h1>
-        <p id="education">&nbsp;&nbsp;&nbsp;
-          Native <span id="language"><b>Indonesia</b></span>,
-          Advanced <span id="language"><b>English</b></span>
-        </p><br>
-
-        <h1 id="ScrollAbout"><b>What I'm Learning Now</b></h1>
-        <p id="education">
-          &nbsp; &nbsp;&nbsp; • Learning React Fundamentals <br>
-          &nbsp; &nbsp;&nbsp; • Improving JavaScript for FullStack <br>
-          &nbsp; &nbsp;&nbsp; • Exploring REST APIs <br>
-          &nbsp; &nbsp;&nbsp; • Practicing Clean UI Systems <br>
-        </p>
-      </div>
-    `
-  },
-
-  works: {
-  title: "works",
-  width: window.innerWidth < 768 ? '95vw' : window.innerWidth < 1024 ? '90vw' : 1000,
-  height: 'auto',
-  content: `
-    <div class="works-layout">
-
-      <div class="works-column">
-        <h2 class="works-title">TOOLS</h2>
-        <div class="tag-list">
-          <span class="tag">Adobe After Effects</span>
-          <span class="tag">Ink Scape</span>
-          <span class="tag">Whimsical</span>
-          <span class="tag">Figma</span>
-          <span class="tag">Canva</span>
-          <span class="tag">Google Colab</span>
-          <span class="tag">Microsoft Word</span>
-          <span class="tag">Microsoft Power Point</span>
-          <span class="tag">Microsoft Office</span>
-
-        </div>
-      </div>
-
-      <div class="works-column">
-        <h2 class="works-title">SKILLS</h2>
-        <div class="tag-list">
-          <span class="tag">MySQL</span>
-          <span class="tag">PHP</span>
-          <span class="tag">C</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">HTML / CSS</span>
-        </div>
-      </div>
-    </div>
-
-  <div>
-    <h2 class="dev-title"> Projects </h2>
-  </div>
-    <div class="dev-card">
-      <div class="dev-image">
-        <img class="works-image" src="/images/homepage_Deborah.png">
-      </div>
-
-      <div class="dev-info">
-        <h3 class="project-title">Deborah Store Accessory E-commerce Website</h3>
-
-        <p class="dev-desc">
-         A custom-built e-commerce website developed for a
-         small accessory store to manage products and customer orders. <br>
-         <b>Role : </b> Full-stack Developer</b> <br>
-         <b>Tech Stack : </b> Native PHP, MySQL, HTML, and CSS.<br>
-         <b>Key Features : </b>
-         Accessory product catalog with images, pricing, and categories
-         Product search functionality
-         Shopping cart and checkout system
-         User accounts with order history
-         Admin dashboard for managing products and orders
-        </p>
-      </div>
-    </div>
-
-    <div class="dev-card">
-      <div class="dev-image">
-        <img class="works-image small-works-image" src="/images/AkiNini.png">
-      </div>
-
-      <div class="dev-info">
-        <h3 class="project-title">AkiNini Catering E-commerce Website</h3>
-
-        <p class="dev-desc">
-         A custom-built e-commerce website developed for a
-         small accessory store to manage products and customer orders. <br>
-         <b>Role : </b> Full-stack Developer</b> <br>
-         <b>Key Contributions : </b>
-          Designed the UI/UX for AkiNini Catering using Figma, creating wireframes and high-fidelity mockups.
-          Developed a consistent design system and improved navigation for a smooth user experience.
-          Iterated on designs based on feedback to enhance usability and visual clarity.
-        </p>
-      </div>
-    </div>
-
-    <div>
-    <h2 class="dev-title"> Small Projects</h2>
-
-       
-    <div class="dev-card">
-      <div class="dev-image">
-        <img class="works-image small-works-image" src="/images/movie_finder.png">
-      </div>
-
-      <div class="dev-info">
-        <h3 class="project-title">Movie finder Web App</h3>
-
-        <p class="dev-desc">
-         A small project built using React to build a movie finder web app <br>
-          Calling Movie Lists API to provide with the Movies. <br>
-          Favorite feature to add favorite movies.
-        </p>
-      </div>
-    </div>
-  </div>
-
- 
-  <div class="dev-card">
-      <div class="dev-image">
-        <img class="works-image small-works-image" src="/images/my_portofolio.png">
-      </div>
-
-      <div class="dev-info">
-        <h3 class="project-title">This website !<br> My Interactive Portofolio Website</h3>
-
-        <p class="dev-desc">
-         A Portofolio website created using JavaScript <br>
-         <b>Key Features : </b>
-          Light and dark mode, <br>
-          Dragable pop up windows,<br>
-          Music player ("the frog plays music!"),<br>
-          Mute button (to mute all sound effects). 
-        </p>
-      </div>
-    </div>
-  </div>
-  `},
-
- links: {
-  title: "links",
-  width: window.innerWidth < 768 ? '95vw' : 380,
-  height: 'auto',
-  content: `
-    <div class="links-container">
-
-      <a href="https://www.linkedin.com/in/mikha-dwight/" target="_blank" class="link-item">
-        <img
-          src="/images/linkedin.png"
-          data-light="/images/linkedin.png"
-          data-dark="/images/linkedin_dark.png"
-          class="linkedin-img"
-          alt="LinkedIn"
-        >
-        <span class="link-label">LinkedIn</span>
-      </a>
-
-      <a href="https://www.instagram.com/mippuw/" target="_blank" class="link-item">
-        <img
-          src="/images/instagram.png"
-          data-light="/images/instagram.png"
-          data-dark="/images/instagram_dark.png"
-          class="linkedin-img"
-          alt="Instagram"
-        >
-        <span class="link-label">Instagram</span>
-      </a>
-
-    </div>
-  `
-},
-  contact: {
-    title: "contact",
-    width: window.innerWidth < 768 ? '95vw' : 500,
-    height: 'auto',
-    content: `
-      <p><b>mail me!</b></p>
-      <div class="profile-card-contact">
-        <img src="/images/cartoonme2.png" class="profile-img-contact">
-      </div>
-      <p class="contact-line">
-      <b>Open  for internships/junior front-end roles</b> <br><br>
-      easy way to reach me is via email. You can
-        mail me at: <br>
-        <a href="mailto:mikhadwight@gmail.com" class="contact-email-link">
-          mikhadwight@gmail.com
-        </a>
-      </p>
-    `
-  }
-};
-
-/* ================= UI SOUNDS ================= */
-// global audio settings
-const setAudio = (src, volume = 0.1) => {
-  const sound = new Audio(src);
-  sound.volume = volume; // set volume
-  sound.originalVolume = volume; // store original volume
-  return sound;
-};
-
-// sounds
-const audio = setAudio('/audios/open_sound.mp3', 0.3);       // open window
-const closeAudio = setAudio('/audios/close_sound.mp3', 0.3);  // close window
-const cringSound = setAudio('/audios/cring_sound.mp3', 0.3); // copy email
-const duckHoverSound = new Audio("audios/duck_sound.mp3");
-duckHoverSound.volume = 0.3;
-const moonSound = setAudio('/audios/moon_btn.mp3', 0.3);     // moon button
-const sunSound = setAudio('/audios/sun_btn.mp3', 0.3);       // sun button
-const unmuteSound = setAudio('/audios/pop_close.mp3', 0.1);  // unmute sound
-const imageOpenSound = setAudio('/audios/image_open.mp3', 0.3); // image modal open
-
-/* ================= OPEN WINDOW ================= */
-function openWindow(type, button) {
-  if (openWindows[type]) {
-    bringToFront(openWindows[type]);
-    return;
-  }
-
-  const cfg = windowConfig[type];
-  if (!cfg) return;
-
-  const rect = button.getBoundingClientRect();
-  const padding = 12;
-  const gap = 10;
-
-  const win = document.createElement("div");
-  win.className = `window ${type}-window`;
-
-  win.style.width = cfg.width + "px";
-  if (cfg.height) win.style.height = cfg.height + "px";
-
-  win.innerHTML = `
-  <div class="title-bar popup-bar">
-    <span>${cfg.title}</span>
-    <button class="close-btn">[ ✕ ]</button>
-  </div>
-  <div class="content ${type === "works" ? "scrollable-content" : ""}">
-
-
-    ${cfg.content}
-  </div>
-`;
-
-  // play CLOSE sound on close button click
-  const closeBtn = win.querySelector('.close-btn');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      closeAudio.currentTime = 0;
-      closeAudio.play();
-    });
-  }
-
-  document.body.appendChild(win);
-  // ✅ sync LinkedIn logo with current theme
-if (type === "links") {
-  const isDark = document.body.classList.contains("dark");
-
-  win.querySelectorAll(".linkedin-img").forEach(img => {
-    img.src = isDark ? img.dataset.dark : img.dataset.light;
-  });
+* {
+  box-sizing: border-box;
 }
 
-
-  const w = win.offsetWidth;
-  const h = win.offsetHeight;
-
-  let left = rect.left + rect.width / 2 - w / 2;
-  let top = rect.top - h - gap;
-
-  left = Math.max(padding, Math.min(left, window.innerWidth - w - padding));
-  if (top < padding) top = rect.bottom + gap;
-  top = Math.max(padding, Math.min(top, window.innerHeight - h - padding));
-
-  const isMobile = window.innerWidth < 768;
-  if (isMobile) {
-    // Slide up animation for mobile
-    Object.assign(win.style, {
-      left: "50%",
-      top: "100%",
-      transform: "translateX(-50%) translateY(100%)",
-      opacity: "0",
-      transition: "transform .3s ease, opacity .3s ease"
-    });
-
-    bringToFront(win);
-    requestAnimationFrame(() => {
-      win.style.transform = "translateX(-50%) translateY(0)";
-      win.style.opacity = "1";
-      audio.currentTime = 0;
-      audio.play();
-    });
-  } else {
-    // Original scale animation for desktop/tablet
-    Object.assign(win.style, {
-      left: left + "px",
-      top: top + "px",
-      transform: "scale(0.85)",
-      opacity: "0",
-      transition: "transform .12s ease, opacity .25s ease"
-    });
-
-    bringToFront(win);
-    requestAnimationFrame(() => {
-      win.style.transform = "scale(1)";
-      win.style.opacity = "1";
-      audio.currentTime = 0;
-      audio.play();
-    });
-  }
-
-  openWindows[type] = win;
-
-  win.querySelector(".close-btn").onclick = () => {
-    win.style.transform = "scale(0.85)";
-    win.style.opacity = "0";
-    setTimeout(() => {
-      win.remove();
-      delete openWindows[type];
-    }, 200);
-  };
-
-  makeDraggable(win);
-  win.addEventListener("mousedown", () => bringToFront(win));
-
-  // Add image modal functionality for works window
-  if (type === "works") {
-    const worksImages = win.querySelectorAll(".works-image");
-    worksImages.forEach(worksImage => {
-      worksImage.style.cursor = "pointer";
-      worksImage.addEventListener("click", () => {
-        openImageModal(worksImage.src, worksImage.alt);
-      });
-    });
-  }
-
-  // Add sound for LinkedIn and Instagram links
-  if (type === "links") {
-    const linkItems = win.querySelectorAll('.link-item');
-    linkItems.forEach(item => {
-      item.addEventListener('click', () => {
-        audio.currentTime = 0;
-        audio.play();
-      });
-    });
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  background: var(--bg-body);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: "zen kaku gothic new", sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* ================= EVENTS ================= */
-document.querySelectorAll(".status-item").forEach(btn => {
-  btn.addEventListener("click", () => {
-    openWindow(btn.dataset.window, btn);
-  });
-});
-
-document.addEventListener("click", (e) => {
-  const link = e.target.closest(".contact-email-link");
-  if (!link) return;
-
-  e.preventDefault();
-  const email = link.textContent.trim();
-  navigator.clipboard.writeText(email);
-
-  cringSound.currentTime = 0;
-  cringSound.play();
-
-  const original = link.textContent;
-  link.textContent = "copied!";
-  link.style.pointerEvents = "none";
-
-  setTimeout(() => {
-    link.textContent = original;
-    link.style.pointerEvents = "auto";
-  }, 1200);
-});
-
-/* ================= MUTE BUTTON & DUCK SOUND ================= */
-mySong.volume = 0.3; // 30% volume
-mySong.loop = true;  // 🔁 LOOP THE MUSIC
-
-
-// collect all sounds in one place
-const allSounds = [mySong, audio, closeAudio, cringSound, duckHoverSound, moonSound, sunSound, unmuteSound, imageOpenSound];
-
-
-let isMuted = false;
-const muteBtn = document.getElementById("muteBtn");
-const muteIcon = muteBtn.querySelector("i");
-
-muteBtn.onclick = () => {
-  isMuted = !isMuted;
-
-  allSounds.forEach(sound => {
-    sound.muted = isMuted;
-  });
-
-  // Play unmute sound if unmuting
-  if (!isMuted) {
-    unmuteSound.currentTime = 0;
-    unmuteSound.play();
-  }
-
-  // switch icon
-  muteIcon.className = isMuted
-    ? "fa-solid fa-volume-xmark"
-    : "fa-solid fa-volume-high";
-};
-
-// duck hover sound on icon
-let duckCooldown = false;
-const duckIcon = document.getElementById("icon");
-
-duckIcon.addEventListener("mouseenter", () => {
-  if (duckCooldown || isMuted) return;
-
-  duckHoverSound.currentTime = 0;
-  duckHoverSound.play();
-
-  duckCooldown = true;
-  setTimeout(() => duckCooldown = false, 600); // prevent spam
-});
-
-/* ================= DARK MODE ================= */
-
-// toggle via moon button (SAFE, no undefined error)
-document.addEventListener("click", (e) => {
-  const btn = e.target.closest("#themeBtn");
-  if (!btn) return;
-
-  document.body.classList.toggle("dark");
-
-  localStorage.setItem(
-    "theme",
-    document.body.classList.contains("dark") ? "dark" : "light"
-  );
-});
-
-// restore theme on reload - always start in light mode
-document.body.classList.remove("dark");
-localStorage.setItem("theme", "light");
-
-/* ================= DARK MODE ================= */
-
-function toggleTheme() {
-  document.body.classList.toggle("dark");
-
-  localStorage.setItem(
-    "theme",
-    document.body.classList.contains("dark") ? "dark" : "light"
-  );
-
-  console.log("dark mode:", document.body.classList.contains("dark"));
-
-  // Play sound based on theme
-  if (document.body.classList.contains("dark")) {
-    moonSound.currentTime = 0;
-    moonSound.play();
-  } else {
-    sunSound.currentTime = 0;
-    sunSound.play();
-  }
-
-  // Change theme button icon based on theme
-  const themeIcon = document.querySelector('.header-btn[onclick="toggleTheme()"] i');
-  if (document.body.classList.contains("dark")) {
-    themeIcon.className = "fa-regular fa-moon";
-  } else {
-    themeIcon.className = "fa-regular fa-sun";
-  }
-
-  // Change button images based on theme
-  const aboutImg = document.querySelector('button[data-window="about"] img');
-  const worksImg = document.querySelector('button[data-window="works"] img');
-  const linksImg = document.querySelector('button[data-window="links"] img');
-  const contactImg = document.querySelector('button[data-window="contact"] img');
-
-  if (document.body.classList.contains("dark")) {
-    aboutImg.src = "/images/about_dark.png";
-    worksImg.src = "/images/works_dark.png";
-    linksImg.src = "/images/links_dark.png";
-    contactImg.src = "/images/contact_dark.png";
-  } else {
-    aboutImg.src = "/images/about.png";
-    worksImg.src = "/images/works.png";
-    linksImg.src = "/images/links.png";
-    contactImg.src = "/images/contact.png";
-  }
-
-  // Sync LinkedIn logos based on theme
-  syncLinkedInLogos();
+p, h1, h2, h3 {
+  color: var(--text-main);
 }
 
-/* ================= IMAGE MODAL ================= */
-function openImageModal(src, alt) {
-  // Play image open sound
-  imageOpenSound.currentTime = 0;
-  imageOpenSound.play();
+/* =========================
+   HEADER
+   ========================= */
 
-  // Create modal elements
-  const modal = document.createElement("div");
-  modal.className = "image-modal";
+.header {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  gap: 10px;
+  z-index: 100;
+}
 
-  const modalContent = document.createElement("div");
-  modalContent.className = "image-modal-content";
+.header-btn {
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
 
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = alt;
+.header-btn:hover {
+  transform: translateY(-2px);
+}
 
-  const closeBtn = document.createElement("button");
-  closeBtn.className = "image-modal-close";
-  closeBtn.innerHTML = "&times;";
-  closeBtn.onclick = () => closeImageModal(modal);
+.header-btn:active {
+  transform: scale(0.95);
+}
 
-  modalContent.appendChild(img);
-  modalContent.appendChild(closeBtn);
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
+/* =========================
+   WINDOW
+   ========================= */
 
-  // Show modal
-  requestAnimationFrame(() => modal.classList.add("show"));
+.window {
+  background: var(--bg-window);
+  border: 1px solid var(--border-window);
+  border-radius: 12px;
+  position: absolute;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  width: 800px;
+  height: 444px;
+  z-index: 50;
+}
 
-  // Close on click outside
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      closeImageModal(modal);
+.window .content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6px;
+}
+
+.home-window .content {
+  padding-top: 0;
+}
+
+.window:not(.home-window) .content {
+  padding-top: 0;
+}
+
+/* =========================
+   TITLE BAR
+   ========================= */
+
+.title-bar {
+  background: var(--bg-titlebar);
+  color: var(--text-invert);
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-size: 22px;
+  height: 52px;
+  transition: background-color 0.2s ease;
+}
+
+.popup-bar {
+  justify-content: space-between;
+  padding-right: 12px;
+}
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.content {
+  text-align: center;
+  padding-top: 6px;
+}
+
+h1 {
+  font-size: 80px;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 24px;
+  margin: 0;
+}
+
+#myname, #myname-title {
+  color: var(--accent);
+}
+
+/* =========================
+   STATUS BAR
+   ========================= */
+
+.status-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 16px;
+  margin-top: 20px;
+  font-family: "roboto mono", monospace;
+}
+
+.status-item {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  transition: transform 0.15s ease;
+}
+
+.status-item img {
+  width: 64px;
+}
+
+.status-item:hover {
+  transform: translateY(-2px);
+}
+
+.status-item:active {
+  transform: scale(0.95);
+}
+.site-footer{
+    position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10; /* higher than waves (1) */
+  font-size: 12px;
+  color: var(--text-muted);
+  opacity: 0.8;
+  pointer-events: none; /* waves-style decoration */
+}
+
+/* ========================= WAVES ========================= */
+
+.waveAnimation {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.waveAnimation svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40%;
+}
+
+.w1, .w2, .w3 {
+  fill: var(--wave-color);
+  transition: fill 0.2s ease;
+}
+
+.w1 {
+  opacity: 0.85;
+  animation: move1 5s ease-in-out infinite;
+}
+
+.w2 {
+  opacity: 0.65;
+  animation: move2 4s ease-in-out infinite;
+}
+
+.w3 {
+  opacity: 0.55;
+  animation: move3 6s ease-in-out infinite;
+}
+
+@keyframes move1 {
+  0% { transform: translateX(-500px) scaleX(2.5); }
+  50% { transform: translateX(0) scaleX(2.5); }
+  100% { transform: translateX(-500px) scaleX(2.5); }
+}
+
+@keyframes move2 {
+  0% { transform: translateX(-600px) scaleX(3); }
+  50% { transform: translateX(0) scaleX(3); }
+  100% { transform: translateX(-600px) scaleX(3); }
+}
+
+@keyframes move3 {
+  0% { transform: translateX(-800px) scaleX(3); }
+  50% { transform: translateX(0) scaleX(3); }
+  100% { transform: translateX(-800px) scaleX(3); }
+}
+
+/* =========================
+   CLOSE BUTTON
+   ========================= */
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* =========================
+   SCROLLABLE CONTENT
+   ========================= */
+
+.scrollable-content {
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 0 20px;
+}
+
+.scrollable-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* =========================
+   ABOUT SECTION
+   ========================= */
+
+.cvBtn{
+  background: var(--accent);
+  border: black solid 1px;
+  color: var(--text-invert);
+  padding: 10px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  font-size: 15px;
+}
+
+.about-static {
+  padding: 0;
+  font-size: 18px;
+  margin: 20px 0 20px 0;
+}
+
+.profile-card {
+  display: flex;
+  gap: 5px;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin: 0;
+  margin-left: 100px;
+  margin-right: -80px;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-info h1 {
+  margin: 0 0 5px 0;
+  font-size: 32px;
+  color: var(--accent);
+}
+
+.profile-subtitle {
+  margin: 0 0 8px 0;
+  font-size: 23px;
+  color: var(--text-muted);
+}
+
+.profile-description {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.about-scroll {
+  height: 180px;
+  padding: 0 30px 20px;
+  overflow-y: auto;
+  font-size: 16px;
+}
+
+.about-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.about-scroll::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.about-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#ScrollAbout {
+  text-align: left;
+  font-size: 25px;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+#education {
+  text-align: left;
+  font-size: 20px;
+}
+
+#education p {
+  margin: 0;
+  line-height: 1.3;
+  font-size: 20px;
+}
+
+#education > div {
+  margin-bottom: 20px;
+}
+
+.about-scroll > p#education {
+  margin-top: 30px;
+}
+
+.education-detail {
+  font-size: 12px;
+  color: var(--accent);
+  margin: -8px 0 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#language {
+  color: var(--accent);
+}
+
+/* =========================
+   WORKS SECTION
+   ========================= */
+
+.works-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 30px 0;
+  padding-left: 50px;
+}
+
+.works-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.works-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  text-align: left;
+}
+
+.dev-header {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.dev-card {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  padding-left: 24px;
+  margin-bottom: 30px;
+}
+
+.dev-image img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  margin-right: 24px;
+  margin-left: 24px;
+}
+
+.small-works-image {
+  margin-left: 20px !important;
+}
+
+.dev-info {
+  flex: 1;
+  text-align: left;
+}
+
+.dev-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: black;
+  margin-bottom: 20px;
+  text-align: left;
+  padding-left: 100px;
+  position: relative;
+  left: -28px;
+}
+
+.dev-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.dev-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.dev-link:hover {
+  text-decoration: underline;
+}
+
+.dev-button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: #fff3d6;
+  color: var(--accent);
+  border-radius: 8px;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.dev-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  text-align: left;
+  margin: 40px 0 20px;
+}
+
+.project-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  background: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+  cursor: default;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.tag:hover {
+  transform: translateY(-2px);
+}
+
+.works-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.works-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.works-scroll::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.works-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.other-dev-item {
+  display: flex;
+  align-items: left;
+  padding-left: 70px;
+  font-size: 10px;
+}
+
+/* =========================
+   LINKS SECTION
+   ========================= */
+
+   
+.links-container {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 40px 0;
+}
+
+.link-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.link-label {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-main);
+  transition: color 0.2s ease;
+}
+
+.link-item:hover .link-label {
+  color: var(--accent);
+}
+
+.linkedin-img {
+  width: 100px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, filter 0.15s ease;
+}
+
+.linkedin-img:hover {
+  transform: translateY(-4px) scale(1.05);
+  opacity: 0.85;
+  filter: brightness(1.1);
+}
+
+/* =========================
+   CONTACT SECTION
+   ========================= */
+
+.profile-card-contact {
+  padding: 0;
+}
+
+.profile-img-contact {
+  width: 200px;
+  height: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+.contact-email-link {
+  color: var(--accent);
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.contact-line {
+  font-size: 20px;
+  margin: 4px 0;
+}
+
+.email-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   MUSIC BUTTON
+   ========================= */
+
+.right-col {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  transform: none;
+  text-align: center;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.right-col img {
+  width: 120px;
+  height: auto;
+  animation: duckFloat 4s ease-in-out infinite;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.right-col:hover img {
+  animation-play-state: paused;
+  transform: scale(1.1);
+  opacity: 0.85;
+}
+
+@keyframes duckFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+/* =========================
+   IMAGE MODAL
+   ========================= */
+
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.image-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.image-modal-content {
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-body);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-modal img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.image-modal-close:hover {
+  color: var(--accent);
+}
+
+/* =========================
+   DARK MODE STYLES
+   ========================= */
+
+body.dark {
+  background: #0f1220 !important;
+}
+
+body.dark .window {
+  background: linear-gradient(180deg, #0f1f35 0%, #0c1a2d 100%);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+body.dark .title-bar {
+  background: linear-gradient(180deg, #0a0a0a, #111);
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+body.dark .close-btn {
+  color: #e7e7e7;
+  opacity: 0.8;
+}
+
+body.dark .close-btn:hover {
+  opacity: 1;
+}
+
+body.dark .header-btn i {
+  color: #e7e7e7;
+}
+
+body.dark h1, body.dark h2, body.dark h3, body.dark p, body.dark span, body.dark li {
+  color: #e8f1ff;
+}
+
+body.dark .profile-subtitle, body.dark .education-detail, body.dark .dev-desc {
+  color: #b7c6da;
+}
+
+body.dark #myname, body.dark #myname-title, body.dark .project-title, body.dark span#language {
+  color: #8fe3ff;
+}
+
+body.dark a {
+  color: #8fe3ff;
+}
+
+body.dark a:hover {
+  text-decoration: underline;
+}
+
+body.dark .tag {
+  background: rgba(255,255,255,0.08);
+  color: #e8f1ff;
+  box-shadow: none;
+}
+
+body.dark .dev-button {
+  background: rgba(255,255,255,0.08);
+  color: #8fe3ff;
+}
+
+body.dark .scrollable-content::-webkit-scrollbar-thumb,
+body.dark .works-scroll::-webkit-scrollbar-thumb,
+body.dark .about-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.25);
+}
+
+body.dark .scrollable-content::-webkit-scrollbar-track,
+body.dark .works-scroll::-webkit-scrollbar-track,
+body.dark .about-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body.dark .w1 {
+  fill: #0b2447;
+  opacity: 0.9;
+}
+
+body.dark .w2 {
+  fill: #19376d;
+  opacity: 0.7;
+}
+
+body.dark .w3 {
+  fill: #2a4f9c;
+  opacity: 0.6;
+}
+
+body.dark .cvBtn {
+  background: #1C1C1C;
+  outline: whitesmoke solid 1px;
+}
+
+/* ========================= MEDIA QUERIES ========================= */
+
+/* TABLET */
+@media (max-width: 1024px) {
+
+  .cvBtn{
+    font-size: 24px;
+  }
+
+    .window {
+    width: 90vw;
+    height: auto;
+  }
+
+  .works-scroll {
+  height: 350px;
+}
+
+  .about-scroll{
+    height: 350px;
+  }
+
+   .window {
+    width: 90vw;
+    height: 600px;
+  }
+
+  .close-btn{
+    font-size: 28px;
+  }
+
+  .title-bar{
+    font-size: 33px;
+  }
+
+  .scrollable-content{
+    max-height: 340px;
+  }
+
+  .contact-email-link {
+    .title-bar{
+      font-size: 33px;
     }
-  });
 
-  // Close on ESC key
-  document.addEventListener("keydown", function escHandler(e) {
-    if (e.key === "Escape") {
-      closeImageModal(modal);
-      document.removeEventListener("keydown", escHandler);
-    }
-  });
+    font-size: 30px;
+  }
+
+  .contact-line{
+    font-size: 33px;
+  }
+
+  .profile-img-contact{
+    width: 180px;
+    height: 180px;
+  }
+
+  .link-label{
+    font-size: 33px;
+  }
+
+  .linkedin-img{
+    width: 130px;
+    height: auto;
+  }
+
+  .dev-image img{
+    width: 330px;
+    height: 330px;
+  }
+
+  .dev-desc{
+    font-size: 32px;
+  }
+
+  .project-title{
+    font-size: 35px;
+  }
+
+  .dev-title {
+    font-size: 35px;
+  }
+
+  .tag{
+    font-size: 32px;
+  }
+
+  .works-title{
+    font-size: 35px;
+  }
+
+  #ScrollAbout{
+    font-size: 33px;
+  }
+
+  #education{
+    font-size: 35px;
+  }
+  #education p{
+    font-size: 35px;
+  }
+
+  .profile-img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-info h1 {
+  font-size: 48px;
 }
 
-function closeImageModal(modal) {
-  modal.classList.remove("show");
-  setTimeout(() => modal.remove(), 300);
-}
+  .profile-subtitle{
+    font-size: 35px;
+  }
 
-// Set initial theme button icon to sun (light mode)
-const themeIcon = document.querySelector('.header-btn[onclick="toggleTheme()"] i');
-themeIcon.className = "fa-regular fa-sun";
+  .header-btn {
+    font-size: 50px;
+  }
 
-// Set initial button images to light mode
-const aboutImg = document.querySelector('button[data-window="about"] img');
-const worksImg = document.querySelector('button[data-window="works"] img');
-const linksImg = document.querySelector('button[data-window="links"] img');
-const contactImg = document.querySelector('button[data-window="contact"] img');
+  .status-item span {
+    font-size: 33px;
+  }
 
-aboutImg.src = "/images/about.png";
-worksImg.src = "/images/works.png";
-linksImg.src = "/images/links.png";
-contactImg.src = "/images/contact.png";
+  h1 {
+    font-size: 120px;
+  }
 
-// switch linkedin images based on theme
-document.querySelectorAll(".linkedin-img").forEach(img => {
-  img.src = document.body.classList.contains("dark")
-    ? img.dataset.dark
-    : img.dataset.light;
-});
+  p {
+    font-size: 45px;
+  }
 
-// 🔁 switch LinkedIn logos based on theme
-document.querySelectorAll(".linkedin-img").forEach(img => {
-  img.src = document.body.classList.contains("dark")
-    ? img.dataset.dark
-    : img.dataset.light;
-});
+  .header {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+  }
 
-// ensure correct LinkedIn logo on window open
-if (document.body.classList.contains("dark")) {
-  win.querySelectorAll(".linkedin-img").forEach(img => {
-    img.src = img.dataset.dark;
-  });
+  .right-col {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .right-col img {
+    width: 250px;
+  }
+
+  .status-bar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .status-item img {
+    width: 110px;
+  }
 }
