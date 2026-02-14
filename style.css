@@ -198,10 +198,19 @@ p {
 .status-item:active {
   transform: scale(0.95);
 }
+.site-footer{
+    position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10; /* higher than waves (1) */
+  font-size: 12px;
+  color: var(--text-muted);
+  opacity: 0.8;
+  pointer-events: none; /* waves-style decoration */
+}
 
-/* =========================
-   WAVES
-   ========================= */
+/* ========================= WAVES ========================= */
 
 .waveAnimation {
   position: fixed;
@@ -294,6 +303,18 @@ p {
 /* =========================
    ABOUT SECTION
    ========================= */
+
+.cvBtn{
+  background: var(--accent);
+  border: black solid 1px;
+  color: var(--text-invert);
+  padding: 10px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  font-size: 15px;
+}
 
 .about-static {
   padding: 0;
@@ -827,10 +848,19 @@ body.dark .w3 {
   opacity: 0.6;
 }
 
+body.dark .cvBtn {
+  background: #1C1C1C;
+  outline: whitesmoke solid 1px;
+}
+
 /* ========================= MEDIA QUERIES ========================= */
 
 /* TABLET */
 @media (max-width: 1024px) {
+
+  .cvBtn{
+    font-size: 24px;
+  }
 
     .window {
     width: 90vw;
@@ -875,8 +905,8 @@ body.dark .w3 {
   }
 
   .profile-img-contact{
-    width: 220px;
-    height: 220px;
+    width: 180px;
+    height: 180px;
   }
 
   .link-label{
@@ -977,6 +1007,4 @@ body.dark .w3 {
   .status-item img {
     width: 110px;
   }
-
-
 }
