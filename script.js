@@ -85,8 +85,7 @@ const windowConfig = {
       <div class="about-scroll">
         <p id="education">Hi! I'm Mikha a web developer i design wireframes and build front-end websites that feel interactive, simple, and user-friendly.<br><br>
         
-
-        <a href="/images/Mikha_Dwight_CV.pdf" download class="cvBtn">Download My CV</a><br><br>
+        <a href="/images/Mikha_Dwight_CV_ATS.pdf" download class="cvBtn">Download My CV</a><br><br>
 
         <h1 id="ScrollAbout"><b>Motto</b></h1>
         <dv id="education">
@@ -131,6 +130,7 @@ const windowConfig = {
           <span class="tag">Whimsical</span>
           <span class="tag">Figma</span>
           <span class="tag">Canva</span>
+          <span class="tag">Google Colab</span>
           <span class="tag">Microsoft Word</span>
           <span class="tag">Microsoft Power Point</span>
           <span class="tag">Microsoft Office</span>
@@ -246,7 +246,7 @@ const windowConfig = {
   content: `
     <div class="links-container">
 
-      <a href="https://www.linkedin.com/in/mikha-dwight-b1943a327/" target="_blank" class="link-item">
+      <a href="https://www.linkedin.com/in/mikha-dwight/" target="_blank" class="link-item">
         <img
           src="/images/linkedin.png"
           data-light="/images/linkedin.png"
