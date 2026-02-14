@@ -74,7 +74,7 @@ const windowConfig = {
     content: `
       <div class="about-static">
         <div class="profile-card">
-          <img src="./images/duck.jpeg" class="profile-img">
+          <img src="/images/my_profilePic.png" class="profile-img">
           <div class="profile-info">
             <h1 id="myname-title">Mikha Dwight</h1>
             <p class="profile-subtitle">Fresh graduate web developer</p>
@@ -83,10 +83,15 @@ const windowConfig = {
       </div>
 
       <div class="about-scroll">
-        <p id="education">&nbsp; &nbsp;&nbsp; Hi! I'm Mikha a web developer i..<br>
-        &nbsp; &nbsp;&nbsp; • create wireframes <br>
-        &nbsp; &nbsp;&nbsp; • do front-end web development <br>
-        <br>
+        <p id="education">Hi! I'm Mikha a web developer i design wireframes and build front-end websites that feel interactive, simple, and user-friendly.<br><br>
+        
+
+        <a href="/images/Mikha_Dwight_CV.pdf" download class="cvBtn">Download My CV</a><br><br>
+
+        <h1 id="ScrollAbout"><b>Motto</b></h1>
+        <dv id="education">
+          <p><b>&nbsp;&nbsp;&nbsp; Courage, determination, and faith.</b></p>
+        </dv><br>
 
         <h1 id="ScrollAbout"><b>Education</b></h1>
         <dv id="education">
@@ -100,10 +105,12 @@ const windowConfig = {
           Advanced <span id="language"><b>English</b></span>
         </p><br>
 
-        <h1 id="ScrollAbout"><b>Other Things I Want to Learn</b></h1>
+        <h1 id="ScrollAbout"><b>What I'm Learning Now</b></h1>
         <p id="education">
-          &nbsp; &nbsp;&nbsp; • Game Development <br>
-          &nbsp; &nbsp;&nbsp; • Software Development <br>
+          &nbsp; &nbsp;&nbsp; • Learning React Fundamentals <br>
+          &nbsp; &nbsp;&nbsp; • Improving JavaScript for FullStack <br>
+          &nbsp; &nbsp;&nbsp; • Exploring REST APIs <br>
+          &nbsp; &nbsp;&nbsp; • Practicing Clean UI Systems <br>
         </p>
       </div>
     `
@@ -144,11 +151,11 @@ const windowConfig = {
     </div>
 
   <div>
-    <h2 class="dev-title"> DEVELOPMENT</h2>
+    <h2 class="dev-title"> Projects </h2>
   </div>
     <div class="dev-card">
       <div class="dev-image">
-        <img class="works-image" src="./images/homepage_Deborah.png">
+        <img class="works-image" src="/images/homepage_Deborah.png">
       </div>
 
       <div class="dev-info">
@@ -171,7 +178,7 @@ const windowConfig = {
 
     <div class="dev-card">
       <div class="dev-image">
-        <img class="works-image small-works-image" src="./images/AkiNini.png">
+        <img class="works-image small-works-image" src="/images/AkiNini.png">
       </div>
 
       <div class="dev-info">
@@ -181,7 +188,7 @@ const windowConfig = {
          A custom-built e-commerce website developed for a
          small accessory store to manage products and customer orders. <br>
          <b>Role : </b> Full-stack Developer</b> <br>
-         <b>Key Features : </b>
+         <b>Key Contributions : </b>
           Designed the UI/UX for AkiNini Catering using Figma, creating wireframes and high-fidelity mockups.
           Developed a consistent design system and improved navigation for a smooth user experience.
           Iterated on designs based on feedback to enhance usability and visual clarity.
@@ -190,10 +197,45 @@ const windowConfig = {
     </div>
 
     <div>
-    <h2 class="dev-title"> Other Dev Project</h2>
+    <h2 class="dev-title"> Small Projects</h2>
 
-      <ul class="other-dev-item">
-        <p class="dev-desc">• This website! </p>
+       
+    <div class="dev-card">
+      <div class="dev-image">
+        <img class="works-image small-works-image" src="/images/movie_finder.png">
+      </div>
+
+      <div class="dev-info">
+        <h3 class="project-title">Movie finder Web App</h3>
+
+        <p class="dev-desc">
+         A small project built using React to build a movie finder web app <br>
+          Calling Movie Lists API to provide with the Movies. <br>
+          Favorite feature to add favorite movies.
+        </p>
+      </div>
+    </div>
+  </div>
+
+ 
+  <div class="dev-card">
+      <div class="dev-image">
+        <img class="works-image small-works-image" src="/images/my_portofolio.png">
+      </div>
+
+      <div class="dev-info">
+        <h3 class="project-title">This website !<br> My Interactive Portofolio Website</h3>
+
+        <p class="dev-desc">
+         A Portofolio website created using JavaScript <br>
+         <b>Key Features : </b>
+          Light and dark mode, <br>
+          Dragable pop up windows,<br>
+          Music player ("the frog plays music!"),<br>
+          Mute button (to mute all sound effects). 
+        </p>
+      </div>
+    </div>
   </div>
   `},
 
@@ -206,9 +248,9 @@ const windowConfig = {
 
       <a href="https://www.linkedin.com/in/mikha-dwight-b1943a327/" target="_blank" class="link-item">
         <img
-          src="./images/linkedin.png"
-          data-light="./images/linkedin.png"
-          data-dark="./images/linkedin_dark.png"
+          src="/images/linkedin.png"
+          data-light="/images/linkedin.png"
+          data-dark="/images/linkedin_dark.png"
           class="linkedin-img"
           alt="LinkedIn"
         >
@@ -217,9 +259,9 @@ const windowConfig = {
 
       <a href="https://www.instagram.com/mippuw/" target="_blank" class="link-item">
         <img
-          src="./images/instagram.png"
-          data-light="./images/instagram.png"
-          data-dark="./images/instagram_dark.png"
+          src="/images/instagram.png"
+          data-light="/images/instagram.png"
+          data-dark="/images/instagram_dark.png"
           class="linkedin-img"
           alt="Instagram"
         >
@@ -236,9 +278,10 @@ const windowConfig = {
     content: `
       <p><b>mail me!</b></p>
       <div class="profile-card-contact">
-        <img src="./images/cartoonme2.png" class="profile-img-contact">
+        <img src="/images/cartoonme2.png" class="profile-img-contact">
       </div>
       <p class="contact-line">
+      <b>Open  for internships/junior front-end roles</b> <br><br>
       easy way to reach me is via email. You can
         mail me at: <br>
         <a href="mailto:mikhadwight@gmail.com" class="contact-email-link">
@@ -259,15 +302,15 @@ const setAudio = (src, volume = 0.1) => {
 };
 
 // sounds
-const audio = setAudio('./audios/open_sound.mp3', 0.3);       // open window
-const closeAudio = setAudio('./audios/close_sound.mp3', 0.3);  // close window
-const cringSound = setAudio('./audios/cring_sound.mp3', 0.3); // copy email
+const audio = setAudio('/audios/open_sound.mp3', 0.3);       // open window
+const closeAudio = setAudio('/audios/close_sound.mp3', 0.3);  // close window
+const cringSound = setAudio('/audios/cring_sound.mp3', 0.3); // copy email
 const duckHoverSound = new Audio("audios/duck_sound.mp3");
 duckHoverSound.volume = 0.3;
-const moonSound = setAudio('./audios/moon_btn.mp3', 0.3);     // moon button
-const sunSound = setAudio('./audios/sun_btn.mp3', 0.3);       // sun button
-const unmuteSound = setAudio('./audios/pop_close.mp3', 0.1);  // unmute sound
-const imageOpenSound = setAudio('./audios/image_open.mp3', 0.3); // image modal open
+const moonSound = setAudio('/audios/moon_btn.mp3', 0.3);     // moon button
+const sunSound = setAudio('/audios/sun_btn.mp3', 0.3);       // sun button
+const unmuteSound = setAudio('/audios/pop_close.mp3', 0.1);  // unmute sound
+const imageOpenSound = setAudio('/audios/image_open.mp3', 0.3); // image modal open
 
 /* ================= OPEN WINDOW ================= */
 function openWindow(type, button) {
@@ -284,7 +327,8 @@ function openWindow(type, button) {
   const gap = 10;
 
   const win = document.createElement("div");
-  win.className = "window";
+  win.className = `window ${type}-window`;
+
   win.style.width = cfg.width + "px";
   if (cfg.height) win.style.height = cfg.height + "px";
 
@@ -533,15 +577,15 @@ function toggleTheme() {
   const contactImg = document.querySelector('button[data-window="contact"] img');
 
   if (document.body.classList.contains("dark")) {
-    aboutImg.src = "./images/about_dark.png";
-    worksImg.src = "./images/works_dark.png";
-    linksImg.src = "./images/links_dark.png";
-    contactImg.src = "./images/contact_dark.png";
+    aboutImg.src = "/images/about_dark.png";
+    worksImg.src = "/images/works_dark.png";
+    linksImg.src = "/images/links_dark.png";
+    contactImg.src = "/images/contact_dark.png";
   } else {
-    aboutImg.src = "./images/about.png";
-    worksImg.src = "./images/works.png";
-    linksImg.src = "./images/links.png";
-    contactImg.src = "./images/contact.png";
+    aboutImg.src = "/images/about.png";
+    worksImg.src = "/images/works.png";
+    linksImg.src = "/images/links.png";
+    contactImg.src = "/images/contact.png";
   }
 
   // Sync LinkedIn logos based on theme
@@ -609,10 +653,10 @@ const worksImg = document.querySelector('button[data-window="works"] img');
 const linksImg = document.querySelector('button[data-window="links"] img');
 const contactImg = document.querySelector('button[data-window="contact"] img');
 
-aboutImg.src = "./images/about.png";
-worksImg.src = "./images/works.png";
-linksImg.src = "./images/links.png";
-contactImg.src = "./images/contact.png";
+aboutImg.src = "/images/about.png";
+worksImg.src = "/images/works.png";
+linksImg.src = "/images/links.png";
+contactImg.src = "/images/contact.png";
 
 // switch linkedin images based on theme
 document.querySelectorAll(".linkedin-img").forEach(img => {
@@ -634,4 +678,3 @@ if (document.body.classList.contains("dark")) {
     img.src = img.dataset.dark;
   });
 }
-
