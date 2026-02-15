@@ -230,7 +230,7 @@ const windowConfig = {
          A Portofolio website created using JavaScript <br>
          <b>Key Features : </b>
           Light and dark mode, <br>
-          Dragable pop up windows,<br>
+          Dragable and scrollable pop up windows,<br>
           Music player ("the frog plays music!"),<br>
           Mute button (to mute all sound effects). 
         </p>
@@ -678,4 +678,5 @@ if (document.body.classList.contains("dark")) {
     img.src = img.dataset.dark;
   });
 }
+
 
