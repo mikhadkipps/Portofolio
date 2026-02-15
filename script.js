@@ -185,9 +185,10 @@ const windowConfig = {
         <h3 class="project-title">AkiNini Catering E-commerce Website</h3>
 
         <p class="dev-desc">
-         A custom-built e-commerce website developed for a
-         small accessory store to manage products and customer orders. <br>
-         <b>Role : </b> Full-stack Developer</b> <br>
+        The website serves as an online promotion and ordering platform that helps 
+        customers easily discover catering services and place orders digitally. 
+        It also supports efficient order management, improving workflow and customer experience. <br>
+         <b>Role : </b>UI/UX Designer</b> <br>
          <b>Key Contributions : </b>
           Designed the UI/UX for AkiNini Catering using Figma, creating wireframes and high-fidelity mockups.
           Developed a consistent design system and improved navigation for a smooth user experience.
@@ -199,7 +200,6 @@ const windowConfig = {
     <div>
     <h2 class="dev-title"> Small Projects</h2>
 
-       
     <div class="dev-card">
       <div class="dev-image">
         <img class="works-image small-works-image" src="/images/movie_finder.png">
@@ -678,3 +678,4 @@ if (document.body.classList.contains("dark")) {
     img.src = img.dataset.dark;
   });
 }
+
